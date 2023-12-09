@@ -12,18 +12,18 @@ namespace Scratch.Data.SinDb
     {
         private static readonly List<char> InvalidChars = Path.GetInvalidFileNameChars().ToList();
 
-        public async Task<LiteRecord<Sin>> CreateAsync(Sin card)
+        public async Task<LiteRecord<Sin>> CreateAsync(Sin sin)
         {
-            card.Guard(nameof(card));
-            card.Name.GuardNullOrWhiteSpace(nameof(card.Name));
+            sin.Guard(nameof(sin));
+            sin.Name.GuardNullOrWhiteSpace(nameof(sin.Name));
 
-            var validNameParts = GetValidNameParts(card);
+            var validNameParts = GetValidNameParts(sin);
             var validName = GetValidName(validNameParts);
             var path = GetValidPath(validNameParts, validName);
 
             var record = new LiteRecord<Sin>
             {
-                Document = card
+                Document = sin
             };
 
             using var db = new LiteDatabase(path);
